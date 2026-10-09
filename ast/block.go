@@ -59,6 +59,7 @@ type Heading struct {
 
 	Level    int
 	Children []Node
+	Pos      int
 }
 
 func (*Heading) Type() NodeType {

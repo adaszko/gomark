@@ -39,5 +39,6 @@ func (*HeadingParser) Match(tokens []*tokenizer.Token) (ast.Node, int) {
 	return &ast.Heading{
 		Level:    level,
 		Children: children,
+		Pos:      matchedTokens[0].Pos,
 	}, len(contentTokens) + level + 1
 }
