@@ -21,18 +21,22 @@ func TestTokenize(t *testing.T) {
 				{
 					Type:  Text,
 					Value: "Hello",
+					Pos:   1,
 				},
 				{
 					Type:  Space,
 					Value: " ",
+					Pos:   6,
 				},
 				{
 					Type:  Text,
 					Value: "world",
+					Pos:   7,
 				},
 				{
 					Type:  ExclamationMark,
 					Value: "!",
+					Pos:   12,
 				},
 			},
 		},
@@ -47,26 +51,32 @@ func TestTokenize(t *testing.T) {
 				{
 					Type:  Space,
 					Value: " ",
+					Pos:   1,
 				},
 				{
 					Type:  Text,
 					Value: "hello",
+					Pos:   2,
 				},
 				{
 					Type:  Space,
 					Value: " ",
+					Pos:   7,
 				},
 				{
 					Type:  NewLine,
 					Value: "\n",
+					Pos:   8,
 				},
 				{
 					Type:  Space,
 					Value: " ",
+					Pos:   9,
 				},
 				{
 					Type:  Text,
 					Value: "world",
+					Pos:   10,
 				},
 			},
 		},

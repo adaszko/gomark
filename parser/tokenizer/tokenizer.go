@@ -59,12 +59,14 @@ const (
 type Token struct {
 	Type  TokenType
 	Value string
+	Pos   int
 }
 
-func NewToken(tp, text string) *Token {
+func NewToken(tp, text string, pos int) *Token {
 	return &Token{
 		Type:  tp,
 		Value: text,
+		Pos:   pos,
 	}
 }
 
@@ -80,66 +82,66 @@ func Tokenize(text string) []*Token {
 
 		switch c {
 		case '_':
-			tokens = append(tokens, NewToken(Underscore, "_"))
+			tokens = append(tokens, NewToken(Underscore, "_", byteIndex))
 		case '*':
-			tokens = append(tokens, NewToken(Asterisk, "*"))
+			tokens = append(tokens, NewToken(Asterisk, "*", byteIndex))
 		case '#':
-			tokens = append(tokens, NewToken(PoundSign, "#"))
+			tokens = append(tokens, NewToken(PoundSign, "#", byteIndex))
 		case '`':
-			tokens = append(tokens, NewToken(Backtick, "`"))
+			tokens = append(tokens, NewToken(Backtick, "`", byteIndex))
 		case '[':
-			tokens = append(tokens, NewToken(LeftSquareBracket, "["))
+			tokens = append(tokens, NewToken(LeftSquareBracket, "[", byteIndex))
 		case ']':
-			tokens = append(tokens, NewToken(RightSquareBracket, "]"))
+			tokens = append(tokens, NewToken(RightSquareBracket, "]", byteIndex))
 		case '(':
-			tokens = append(tokens, NewToken(LeftParenthesis, "("))
+			tokens = append(tokens, NewToken(LeftParenthesis, "(", byteIndex))
 		case ')':
-			tokens = append(tokens, NewToken(RightParenthesis, ")"))
+			tokens = append(tokens, NewToken(RightParenthesis, ")", byteIndex))
 		case '!':
-			tokens = append(tokens, NewToken(ExclamationMark, "!"))
+			tokens = append(tokens, NewToken(ExclamationMark, "!", byteIndex))
 		case '?':
-			tokens = append(tokens, NewToken(QuestionMark, "?"))
+			tokens = append(tokens, NewToken(QuestionMark, "?", byteIndex))
 		case '~':
-			tokens = append(tokens, NewToken(Tilde, "~"))
+			tokens = append(tokens, NewToken(Tilde, "~", byteIndex))
 		case '-':
-			tokens = append(tokens, NewToken(Hyphen, "-"))
+			tokens = append(tokens, NewToken(Hyphen, "-", byteIndex))
 		case '<':
-			tokens = append(tokens, NewToken(LessThan, "<"))
+			tokens = append(tokens, NewToken(LessThan, "<", byteIndex))
 		case '>':
-			tokens = append(tokens, NewToken(GreaterThan, ">"))
+			tokens = append(tokens, NewToken(GreaterThan, ">", byteIndex))
 		case '+':
-			tokens = append(tokens, NewToken(PlusSign, "+"))
+			tokens = append(tokens, NewToken(PlusSign, "+", byteIndex))
 		case '.':
-			tokens = append(tokens, NewToken(Dot, "."))
+			tokens = append(tokens, NewToken(Dot, ".", byteIndex))
 		case '$':
-			tokens = append(tokens, NewToken(DollarSign, "$"))
+			tokens = append(tokens, NewToken(DollarSign, "$", byteIndex))
 		case '=':
-			tokens = append(tokens, NewToken(EqualSign, "="))
+			tokens = append(tokens, NewToken(EqualSign, "=", byteIndex))
 		case '|':
-			tokens = append(tokens, NewToken(Pipe, "|"))
+			tokens = append(tokens, NewToken(Pipe, "|", byteIndex))
 		case ':':
-			tokens = append(tokens, NewToken(Colon, ":"))
+			tokens = append(tokens, NewToken(Colon, ":", byteIndex))
 		case '^':
-			tokens = append(tokens, NewToken(Caret, "^"))
+			tokens = append(tokens, NewToken(Caret, "^", byteIndex))
 		case '\'':
-			tokens = append(tokens, NewToken(Apostrophe, "'"))
+			tokens = append(tokens, NewToken(Apostrophe, "'", byteIndex))
 		case '\\':
-			tokens = append(tokens, NewToken(Backslash, `\`))
+			tokens = append(tokens, NewToken(Backslash, `\`, byteIndex))
 		case '/':
-			tokens = append(tokens, NewToken(Slash, "/"))
+			tokens = append(tokens, NewToken(Slash, "/", byteIndex))
 		case '\n':
-			tokens = append(tokens, NewToken(NewLine, "\n"))
+			tokens = append(tokens, NewToken(NewLine, "\n", byteIndex))
 		case ' ':
 			// Handle consecutive spaces
-			if token, bytesCount := handleSpaces(text[byteIndex:]); token != nil {
+			if token, bytesCount := handleSpaces(text[byteIndex:], byteIndex); token != nil {
 				tokens = append(tokens, token)
 				byteIndex += bytesCount
 				continue
 			}
-			tokens = append(tokens, NewToken(Space, " "))
+			tokens = append(tokens, NewToken(Space, " ", byteIndex))
 		default:
 			// Handle text and numbers more efficiently
-			if token, bytesCount := handleTextOrNumber(text[byteIndex:]); token != nil {
+			if token, bytesCount := handleTextOrNumber(text[byteIndex:], byteIndex); token != nil {
 				tokens = append(tokens, token)
 				byteIndex += bytesCount
 				continue
@@ -213,7 +215,7 @@ func GetFirstLine(tokens []*Token) []*Token {
 // tryMultiCharToken attempts to match multi-character token sequences.
 // Only handles sequences that don't break existing parsers.
 // handleSpaces consolidates consecutive spaces into a single token.
-func handleSpaces(text string) (*Token, int) {
+func handleSpaces(text string, byteIndex int) (*Token, int) {
 	runesCount := 0
 	bytesCount := 0
 	for {
@@ -234,14 +236,14 @@ func handleSpaces(text string) (*Token, int) {
 		for i := range spaces {
 			spaces[i] = ' '
 		}
-		return NewToken(MultipleSpaces, string(spaces)), bytesCount
+		return NewToken(MultipleSpaces, string(spaces), byteIndex), bytesCount
 	}
 
 	return nil, 0
 }
 
 // handleTextOrNumber consolidates consecutive text or number characters.
-func handleTextOrNumber(text string) (*Token, int) {
+func handleTextOrNumber(text string, byteIndex int) (*Token, int) {
 	c, runeWidth := utf8.DecodeRuneInString(text)
 	isNumber := c >= '0' && c <= '9'
 	isText := !isSpecialChar(c) && !isNumber
@@ -267,9 +269,9 @@ func handleTextOrNumber(text string) (*Token, int) {
 
 	content := string(text[:bytesCount])
 	if isNumber {
-		return NewToken(Number, content), bytesCount
+		return NewToken(Number, content, byteIndex), bytesCount
 	}
-	return NewToken(Text, content), bytesCount
+	return NewToken(Text, content, byteIndex), bytesCount
 }
 
 // isSpecialChar checks if a character is a special markdown character.
