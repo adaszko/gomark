@@ -1,6 +1,8 @@
 // Package tokenizer converts markdown text into lexical tokens used by the parser.
 package tokenizer
 
+import "unicode/utf8"
+
 type TokenType = string
 
 // Special character tokens.
@@ -68,12 +70,13 @@ func NewToken(tp, text string) *Token {
 
 func Tokenize(text string) []*Token {
 	tokens := []*Token{}
-	runes := []rune(text)
 
-	for i := 0; i < len(runes); i++ {
-		c := runes[i]
-
-		// Multi-character tokenization is currently disabled for simplicity and performance.
+	byteIndex := 0
+	for {
+		c, runeWidth := utf8.DecodeRuneInString(text[byteIndex:])
+		if c == utf8.RuneError {
+			break
+		}
 
 		switch c {
 		case '_':
@@ -128,21 +131,24 @@ func Tokenize(text string) []*Token {
 			tokens = append(tokens, NewToken(NewLine, "\n"))
 		case ' ':
 			// Handle consecutive spaces
-			if token, consumed := handleSpaces(runes, i); token != nil {
+			if token, bytesCount := handleSpaces(text[byteIndex:]); token != nil {
 				tokens = append(tokens, token)
-				i += consumed - 1
+				byteIndex += bytesCount
 				continue
 			}
 			tokens = append(tokens, NewToken(Space, " "))
 		default:
 			// Handle text and numbers more efficiently
-			if token, consumed := handleTextOrNumber(runes, i); token != nil {
+			if token, bytesCount := handleTextOrNumber(text[byteIndex:]); token != nil {
 				tokens = append(tokens, token)
-				i += consumed - 1
+				byteIndex += bytesCount
 				continue
 			}
 		}
+
+		byteIndex += runeWidth
 	}
+
 	return tokens
 }
 
@@ -207,34 +213,36 @@ func GetFirstLine(tokens []*Token) []*Token {
 // tryMultiCharToken attempts to match multi-character token sequences.
 // Only handles sequences that don't break existing parsers.
 // handleSpaces consolidates consecutive spaces into a single token.
-func handleSpaces(runes []rune, pos int) (*Token, int) {
-	if pos >= len(runes) || runes[pos] != ' ' {
-		return nil, 0
+func handleSpaces(text string) (*Token, int) {
+	runesCount := 0
+	bytesCount := 0
+	for {
+		c, runeWidth := utf8.DecodeRuneInString(text[bytesCount:])
+		if c == utf8.RuneError {
+			break
+		}
+		if c == ' ' {
+			runesCount++
+			bytesCount += runeWidth
+		} else {
+			break
+		}
 	}
 
-	count := 0
-	for i := pos; i < len(runes) && runes[i] == ' '; i++ {
-		count++
-	}
-
-	if count > 1 {
-		spaces := make([]rune, count)
+	if runesCount > 1 {
+		spaces := make([]rune, runesCount)
 		for i := range spaces {
 			spaces[i] = ' '
 		}
-		return NewToken(MultipleSpaces, string(spaces)), count
+		return NewToken(MultipleSpaces, string(spaces)), bytesCount
 	}
 
 	return nil, 0
 }
 
 // handleTextOrNumber consolidates consecutive text or number characters.
-func handleTextOrNumber(runes []rune, pos int) (*Token, int) {
-	if pos >= len(runes) {
-		return nil, 0
-	}
-
-	c := runes[pos]
+func handleTextOrNumber(text string) (*Token, int) {
+	c, runeWidth := utf8.DecodeRuneInString(text)
 	isNumber := c >= '0' && c <= '9'
 	isText := !isSpecialChar(c) && !isNumber
 
@@ -242,23 +250,26 @@ func handleTextOrNumber(runes []rune, pos int) (*Token, int) {
 		return nil, 0
 	}
 
-	start := pos
-	for pos < len(runes) {
-		ch := runes[pos]
+	bytesCount := runeWidth
+	for {
+		ch, runeWidth := utf8.DecodeRuneInString(text[bytesCount:])
+		if ch == utf8.RuneError {
+			break
+		}
 		if isNumber && (ch >= '0' && ch <= '9') {
-			pos++
+			bytesCount += runeWidth
 		} else if isText && !isSpecialChar(ch) && (ch < '0' || ch > '9') {
-			pos++
+			bytesCount += runeWidth
 		} else {
 			break
 		}
 	}
 
-	content := string(runes[start:pos])
+	content := string(text[:bytesCount])
 	if isNumber {
-		return NewToken(Number, content), pos - start
+		return NewToken(Number, content), bytesCount
 	}
-	return NewToken(Text, content), pos - start
+	return NewToken(Text, content), bytesCount
 }
 
 // isSpecialChar checks if a character is a special markdown character.
