@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/usememos/gomark/ast"
+	"github.com/adaszko/gomark/ast"
 )
 
 type RendererContext struct {

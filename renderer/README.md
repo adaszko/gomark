@@ -76,12 +76,12 @@ func (f *RendererFactory) CreateRenderer(rendererType RendererType) Renderer
 
 ### Markdown Renderer
 
-**Package**: `github.com/usememos/gomark/renderer/markdown`
+**Package**: `github.com/adaszko/gomark/renderer/markdown`
 
 Converts AST nodes back to markdown format, enabling roundtrip parsing and rendering.
 
 ```go
-import markdownrenderer "github.com/usememos/gomark/renderer/markdown"
+import markdownrenderer "github.com/adaszko/gomark/renderer/markdown"
 
 renderer := markdownrenderer.NewMarkdownRenderer()
 markdown := renderer.RenderDocument(doc)
@@ -101,12 +101,12 @@ markdown := renderer.RenderDocument(doc)
 
 ### HTML Renderer
 
-**Package**: `github.com/usememos/gomark/renderer/html`
+**Package**: `github.com/adaszko/gomark/renderer/html`
 
 Generates semantic HTML from AST nodes.
 
 ```go
-import htmlrenderer "github.com/usememos/gomark/renderer/html"
+import htmlrenderer "github.com/adaszko/gomark/renderer/html"
 
 renderer := htmlrenderer.NewHTMLRenderer()
 html := renderer.RenderDocument(doc)
@@ -135,12 +135,12 @@ html := renderer.RenderDocument(doc)
 
 ### String Renderer
 
-**Package**: `github.com/usememos/gomark/renderer/string`
+**Package**: `github.com/adaszko/gomark/renderer/string`
 
 Extracts plain text content from AST, removing all markdown formatting.
 
 ```go
-import stringrenderer "github.com/usememos/gomark/renderer/string"
+import stringrenderer "github.com/adaszko/gomark/renderer/string"
 
 renderer := stringrenderer.NewStringRenderer()
 text := renderer.RenderDocument(doc)
@@ -165,9 +165,9 @@ text := renderer.RenderDocument(doc)
 
 ```go
 import (
-    "github.com/usememos/gomark/renderer"
-    markdownrenderer "github.com/usememos/gomark/renderer/markdown"
-    htmlrenderer "github.com/usememos/gomark/renderer/html"
+    "github.com/adaszko/gomark/renderer"
+    markdownrenderer "github.com/adaszko/gomark/renderer/markdown"
+    htmlrenderer "github.com/adaszko/gomark/renderer/html"
 )
 
 // Create document AST (from parser)

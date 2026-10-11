@@ -5,11 +5,11 @@
 package gomark
 
 import (
-	"github.com/usememos/gomark/ast"
-	"github.com/usememos/gomark/config"
-	"github.com/usememos/gomark/parser"
-	"github.com/usememos/gomark/parser/tokenizer"
-	"github.com/usememos/gomark/renderer/markdown"
+	"github.com/adaszko/gomark/ast"
+	"github.com/adaszko/gomark/config"
+	"github.com/adaszko/gomark/parser"
+	"github.com/adaszko/gomark/parser/tokenizer"
+	"github.com/adaszko/gomark/renderer/markdown"
 )
 
 // Engine coordinates parsing and rendering.

@@ -2,10 +2,10 @@
 package renderer
 
 import (
-	"github.com/usememos/gomark/ast"
-	htmlrenderer "github.com/usememos/gomark/renderer/html"
-	markdownrenderer "github.com/usememos/gomark/renderer/markdown"
-	stringrenderer "github.com/usememos/gomark/renderer/string"
+	"github.com/adaszko/gomark/ast"
+	htmlrenderer "github.com/adaszko/gomark/renderer/html"
+	markdownrenderer "github.com/adaszko/gomark/renderer/markdown"
+	stringrenderer "github.com/adaszko/gomark/renderer/string"
 )
 
 // Renderer defines the common interface for all renderers.

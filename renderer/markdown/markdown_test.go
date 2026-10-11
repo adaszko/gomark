@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/usememos/gomark/ast"
+	"github.com/adaszko/gomark/ast"
 )
 
 func TestMarkdownRenderer(t *testing.T) {

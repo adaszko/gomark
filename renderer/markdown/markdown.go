@@ -4,7 +4,7 @@ package markdown
 import (
 	"bytes"
 
-	"github.com/usememos/gomark/ast"
+	"github.com/adaszko/gomark/ast"
 )
 
 // MarkdownRenderer renders an AST back into markdown text.

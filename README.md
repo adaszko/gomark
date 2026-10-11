@@ -40,8 +40,8 @@ package main
 
 import (
     "fmt"
-    "github.com/usememos/gomark"
-    "github.com/usememos/gomark/renderer/html"
+    "github.com/adaszko/gomark"
+    "github.com/adaszko/gomark/renderer/html"
 )
 
 func main() {
@@ -83,8 +83,8 @@ While gomark works great with zero configuration, you can customize it if needed
 
 ```go
 import (
-    "github.com/usememos/gomark"
-    "github.com/usememos/gomark/config"
+    "github.com/adaszko/gomark"
+    "github.com/adaszko/gomark/config"
 )
 
 // Customize limits if needed
@@ -99,9 +99,9 @@ doc, err := engine.Parse(markdown)
 
 ```go
 import (
-    "github.com/usememos/gomark/renderer"
-    "github.com/usememos/gomark/renderer/html"
-    "github.com/usememos/gomark/renderer/string"
+    "github.com/adaszko/gomark/renderer"
+    "github.com/adaszko/gomark/renderer/html"
+    "github.com/adaszko/gomark/renderer/string"
 )
 
 // Parse once, render to multiple formats
@@ -122,7 +122,7 @@ markdownOutput := gomark.Restore(doc)
 ### Available Configurations
 
 ```go
-import "github.com/usememos/gomark/config"
+import "github.com/adaszko/gomark/config"
 
 // Default configuration: all features enabled with generous limits
 cfg := config.DefaultConfig()

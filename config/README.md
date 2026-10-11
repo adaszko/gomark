@@ -76,7 +76,7 @@ config := cfg.WithMaxFileSize(1024 * 1024) // 1MB
 ### Zero Configuration (Recommended)
 
 ```go
-import "github.com/usememos/gomark"
+import "github.com/adaszko/gomark"
 
 // No configuration needed - all features work out of the box!
 doc, err := gomark.Parse("Press <kbd>Ctrl</kbd> with **bold** and ==highlighting==")
@@ -85,7 +85,7 @@ doc, err := gomark.Parse("Press <kbd>Ctrl</kbd> with **bold** and ==highlighting
 ### Basic Configuration Usage
 
 ```go
-import "github.com/usememos/gomark/config"
+import "github.com/adaszko/gomark/config"
 
 // Default configuration - all features enabled
 cfg := config.DefaultConfig()

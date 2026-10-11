@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/usememos/gomark/parser"
-	"github.com/usememos/gomark/parser/tokenizer"
+	"github.com/adaszko/gomark/parser"
+	"github.com/adaszko/gomark/parser/tokenizer"
 )
 
 func TestHTMLRenderer(t *testing.T) {

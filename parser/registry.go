@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/usememos/gomark/parser/internal"
+	"github.com/adaszko/gomark/parser/internal"
 )
 
 // ParserRegistry manages the collection of available parsers.

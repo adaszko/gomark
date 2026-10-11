@@ -2,10 +2,10 @@
 package parser
 
 import (
-	"github.com/usememos/gomark/ast"
-	"github.com/usememos/gomark/config"
-	"github.com/usememos/gomark/parser/internal"
-	"github.com/usememos/gomark/parser/tokenizer"
+	"github.com/adaszko/gomark/ast"
+	"github.com/adaszko/gomark/config"
+	"github.com/adaszko/gomark/parser/internal"
+	"github.com/adaszko/gomark/parser/tokenizer"
 )
 
 type BaseParser interface {

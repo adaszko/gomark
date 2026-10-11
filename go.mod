@@ -1,4 +1,4 @@
-module github.com/usememos/gomark
+module github.com/adaszko/gomark
 
 go 1.21
 

@@ -2,8 +2,8 @@
 package internal
 
 import (
-	"github.com/usememos/gomark/ast"
-	"github.com/usememos/gomark/parser/tokenizer"
+	"github.com/adaszko/gomark/ast"
+	"github.com/adaszko/gomark/parser/tokenizer"
 )
 
 // ParseInline parses inline tokens into AST nodes.

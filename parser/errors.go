@@ -3,7 +3,7 @@ package parser
 import (
 	"fmt"
 
-	"github.com/usememos/gomark/parser/tokenizer"
+	"github.com/adaszko/gomark/parser/tokenizer"
 )
 
 // ParseError represents different types of parsing errors.

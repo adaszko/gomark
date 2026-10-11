@@ -3,8 +3,8 @@ package internal
 import (
 	"net/url"
 
-	"github.com/usememos/gomark/ast"
-	"github.com/usememos/gomark/parser/tokenizer"
+	"github.com/adaszko/gomark/ast"
+	"github.com/adaszko/gomark/parser/tokenizer"
 )
 
 type AutoLinkParser struct{}

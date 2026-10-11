@@ -217,8 +217,8 @@ Converts raw markdown text into a sequence of tokens for parsing.
 
 ```go
 import (
-    "github.com/usememos/gomark/parser"
-    "github.com/usememos/gomark/parser/tokenizer"
+    "github.com/adaszko/gomark/parser"
+    "github.com/adaszko/gomark/parser/tokenizer"
 )
 
 // Tokenize markdown
@@ -236,7 +236,7 @@ if err != nil {
 For most use cases, prefer the high-level API which includes tokenization:
 
 ```go
-import "github.com/usememos/gomark"
+import "github.com/adaszko/gomark"
 
 // Simple usage - all features including HTML elements enabled
 doc, err := gomark.Parse("Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to copy")
@@ -246,9 +246,9 @@ doc, err := gomark.Parse("Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to copy")
 
 ```go
 import (
-    "github.com/usememos/gomark/config"
-    "github.com/usememos/gomark/parser"
-    "github.com/usememos/gomark/parser/tokenizer"
+    "github.com/adaszko/gomark/config"
+    "github.com/adaszko/gomark/parser"
+    "github.com/adaszko/gomark/parser/tokenizer"
 )
 
 // Create custom config if needed
@@ -261,7 +261,7 @@ tokens := tokenizer.Tokenize(markdown)
 doc, err := parser.ParseWithConfig(tokens, cfg)
 
 // Alternative: Use high-level API with config
-import "github.com/usememos/gomark"
+import "github.com/adaszko/gomark"
 engine := gomark.NewEngine(gomark.WithConfig(cfg))
 doc, err := engine.Parse(markdown)
 ```
