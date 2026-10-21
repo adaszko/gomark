@@ -3,10 +3,10 @@ package tests
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	"github.com/adaszko/gomark/ast"
 	"github.com/adaszko/gomark/parser/internal"
 	"github.com/adaszko/gomark/parser/tokenizer"
+	"github.com/stretchr/testify/require"
 )
 
 func TestItalicParser(t *testing.T) {
@@ -105,6 +105,7 @@ func TestItalicParser(t *testing.T) {
 							},
 						},
 						URL: "https://example.com",
+						Pos: 1,
 					},
 				},
 			},

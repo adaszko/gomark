@@ -119,6 +119,7 @@ type Link struct {
 
 	Content []Node
 	URL     string
+	Pos     int
 }
 
 func (*Link) Type() NodeType {

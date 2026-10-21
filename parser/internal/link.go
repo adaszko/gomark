@@ -76,5 +76,6 @@ func (*LinkParser) Match(tokens []*tokenizer.Token) (ast.Node, int) {
 	return &ast.Link{
 		Content: contentNodes,
 		URL:     tokenizer.Stringify(urlTokens),
+		Pos:     matchedTokens[0].Pos,
 	}, 4 + len(contentTokens) + len(urlTokens)
 }
