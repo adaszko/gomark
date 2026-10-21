@@ -256,6 +256,7 @@ type ReferencedContent struct {
 
 	ResourceName string
 	Params       string
+	Pos          int
 }
 
 func (*ReferencedContent) Type() NodeType {

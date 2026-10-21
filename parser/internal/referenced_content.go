@@ -41,5 +41,6 @@ func (*ReferencedContentParser) Match(tokens []*tokenizer.Token) (ast.Node, int)
 	return &ast.ReferencedContent{
 		ResourceName: resourceName,
 		Params:       params,
+		Pos:          matchedTokens[0].Pos,
 	}, len(contentTokens) + 4
 }
