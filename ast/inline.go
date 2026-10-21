@@ -139,6 +139,7 @@ type AutoLink struct {
 
 	URL       string
 	IsRawText bool
+	Pos       int
 }
 
 func (*AutoLink) Type() NodeType {
