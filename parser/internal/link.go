@@ -56,9 +56,6 @@ func (*LinkParser) Match(tokens []*tokenizer.Token) (ast.Node, int) {
 	}
 	urlTokens, matched := []*tokenizer.Token{}, false
 	for _, token := range matchedTokens[3+len(contentTokens):] {
-		if token.Type == tokenizer.Space {
-			return nil, 0
-		}
 		if token.Type == tokenizer.RightParenthesis {
 			matched = true
 			break

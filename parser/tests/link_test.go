@@ -26,10 +26,6 @@ func TestLinkParser(t *testing.T) {
 			node: nil,
 		},
 		{
-			text: "[alte]( htt ps :/ /example.com)",
-			node: nil,
-		},
-		{
 			text: "[your/slash](https://example.com)",
 			node: &ast.Link{
 				Content: []ast.Node{&ast.Text{Content: "your/slash"}},
@@ -77,4 +73,15 @@ func TestLinkParser(t *testing.T) {
 		node, _ := internal.NewLinkParser().Match(tokens)
 		require.Equal(t, test.node, node)
 	}
+}
+
+func TestLinkSpaces(t *testing.T) {
+	text := "[](foo://bar baz)"
+	expected_node := &ast.Link{
+		Content: []ast.Node{},
+		URL:     "foo://bar baz",
+	}
+	tokens := tokenizer.Tokenize(text)
+	actual_node, _ := internal.NewLinkParser().Match(tokens)
+	require.Equal(t, expected_node, actual_node)
 }
